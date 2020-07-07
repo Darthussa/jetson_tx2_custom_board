@@ -34,3 +34,17 @@ modules/
 /u-boot_src.tbz2.sha1sum
 /v4l2_libs_src.tbz2
 /v4l2_libs_src.tbz2.sha1sum
+/kernel/kernel-4.9/scripts/basic/.fixdep.cmd
+/kernel/kernel-4.9/scripts/basic/fixdep
+/kernel/kernel-4.9/scripts/kconfig/.qconf.cmd
+/kernel/kernel-4.9/scripts/kconfig/.qconf.o.cmd
+/kernel/kernel-4.9/scripts/kconfig/.tmp_qtcheck
+/kernel/kernel-4.9/scripts/kconfig/.zconf.tab.o.cmd
+/kernel/kernel-4.9/scripts/kconfig/qconf
+/kernel/kernel-4.9/scripts/kconfig/qconf.moc
+/kernel/kernel-4.9/scripts/kconfig/qconf.o
+/kernel/kernel-4.9/scripts/kconfig/zconf.hash.c
+/kernel/kernel-4.9/scripts/kconfig/zconf.lex.c
+/kernel/kernel-4.9/scripts/kconfig/zconf.tab.c
+/kernel/kernel-4.9/scripts/kconfig/zconf.tab.o
+/kernel/kernel-4.9/signing_key.x509
