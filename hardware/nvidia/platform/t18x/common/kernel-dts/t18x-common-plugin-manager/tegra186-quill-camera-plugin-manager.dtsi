@@ -16,19 +16,20 @@
 #define CAM0_PWDN	TEGRA_MAIN_GPIO(R, 0)
 #define CAM1_RST_L	TEGRA_MAIN_GPIO(R, 1)
 #define CAM1_PWDN	TEGRA_MAIN_GPIO(L, 6)
+//#define CAM1_PWDN	TEGRA_MAIN_GPIO(N, 2)
 
 / {
 	gpio@2200000 {
 		camera-control-output-low {
-			status = "disabled";
+			status = "okay";
 		};
 
 		camera-control-output-high {
-			status = "disabled";
+			status = "okay";
 		};
 
 		camera-control-input {
-			status = "disabled";
+			status = "okay";
 		};
 	};
 
@@ -632,26 +633,10 @@
 
 		fragment-p3310-c00-camera {
 			ids = ">=3310-1000-800", ">=3489-0000-200", ">=3489-0888-300";
-			override@1 {
+			/*override@1 {
 				target = <&{/i2c@c240000/ov23850_c@36}>;
 				_overlay_ {
 					pwdn-gpios = <&tegra_main_gpio TEGRA_MAIN_GPIO(N, 2) GPIO_ACTIVE_HIGH>;
-				};
-			};
-			override@2 {
-				target = <&{/gpio@2200000}>;
-				_overlay_ {
-					camera-control-output-low {
-						gpio-hog;
-						gpios = <TEGRA_MAIN_GPIO(R, 5) 0
-							 TEGRA_MAIN_GPIO(R, 0) 0
-							 TEGRA_MAIN_GPIO(R, 1) 0
-							 TEGRA_MAIN_GPIO(N, 2) 0>;
-						label = "cam0-rst", "cam0-pwdn",
-							"cam1-rst", "cam1-pwdn";
-						output-low;
-						status = "okay";
-					};
 				};
 			};
 			override@3 {
@@ -659,7 +644,289 @@
 				_overlay_ {
 					pwdn-gpios = <&tegra_main_gpio TEGRA_MAIN_GPIO(N, 2) GPIO_ACTIVE_HIGH>;
 				};
+			};*/
+			override@2 {
+				target = <&{/gpio@2200000}>;
+				_overlay_ {
+					camera-control-output-low {
+						gpio-hog;
+						/*gpios = <TEGRA_MAIN_GPIO(R, 5) 0
+							 TEGRA_MAIN_GPIO(R, 0) 0
+							 TEGRA_MAIN_GPIO(R, 1) 0
+							 TEGRA_MAIN_GPIO(L, 6) 0>;*/
+						gpios = <CAM0_RST_L 1 CAM0_PWDN 1
+							CAM1_RST_L 1 CAM1_PWDN 1>;
+						label = "cam0-rst", "cam0-pwdn",
+							"cam1-rst", "cam1-pwdn";
+						output-low;
+						status = "okay";
+					};
+				};
 			};
+			override@4 {
+				target = <&vi_base>;
+				_overlay_ {
+					num-channels=<3>;
+				};
+			};
+			/* CSI number of channels */
+			override@5 {
+				target = <&csi_base>;
+				_overlay_ {
+					num-channels=<3>;
+				};
+			};
+			/* tegra-camera-platform settings */
+			override@6 {
+				target = <&tcp>;
+				_overlay_ {
+					num_csi_lanes = <12>;
+					max_lane_speed = <1500000>;
+					min_bits_per_pixel = <10>;
+					vi_peak_byte_per_pixel = <2>;
+					vi_bw_margin_pct = <25>;
+					max_pixel_rate = <200000>;
+					isp_peak_byte_per_pixel = <5>;
+					isp_bw_margin_pct = <25>;
+				};
+			};
+		
+			/* TCA9548 */
+			/*override@7 {
+				target = <&tca9548>;
+				_overlay_ {
+					status = "okay";
+				};
+			};*/
+			/* Camera 0: Module */
+			override@8 {
+				target = <&ov5640_cam0>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@9 {
+				target = <&cam_module0>;
+				_overlay_ {
+					status = "okay";
+					badge = "ov5640_center_ov";
+					position = "center";
+					orientation = "1";
+				};
+			};
+			override@10 {
+				target = <&cam_module0_drivernode0>;
+				_overlay_ {
+					status = "okay";
+					pcl_id = "v4l2_sensor";
+					devname = "ov5640 0-003c";
+					proc-device-tree = "/proc/device-tree/i2c@3180000/ov5640_a@3c";
+				};
+			};
+			/* Camera 0: VI */
+			override@11 {
+				target = <&vi_port0>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@12 {
+				target = <&ov5640_vi_in0>;
+				_overlay_ {
+					status = "okay";
+					port-index = <0>;
+					bus-width = <2>;
+					remote-endpoint = <&ov5640_csi_out0>;
+				};
+			};
+			/* Camera 0: CSI */
+			override@13 {
+				target = <&csi_chan0>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@14 {
+				target = <&csi_chan0_port0>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@15 {
+				target = <&ov5640_csi_in0>;
+				_overlay_ {
+					status = "okay";
+					port-index = <0>;
+					bus-width = <2>;
+					remote-endpoint = <&ov5640_out0>;
+				};
+			};
+			override@16 {
+				target = <&csi_chan0_port1>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@17 {
+				target = <&ov5640_csi_out0>;
+				_overlay_ {
+					status = "okay";
+					remote-endpoint = <&ov5640_vi_in0>;
+				};
+			};
+			/* Camera 1: Module */
+			override@18 {
+				target = <&ov5640_cam1>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@19 {
+				target = <&cam_module1>;
+				_overlay_ {
+					status = "okay";
+					badge = "ov5640_top_ov";
+					position = "top";
+					orientation = "1";
+				};
+			};
+			override@20 {
+				target = <&cam_module1_drivernode0>;
+				_overlay_ {
+					status = "okay";
+					pcl_id = "v4l2_sensor";
+					devname = "ov5640 1-003c";
+					proc-device-tree = "/proc/device-tree/i2c@c240000/ov5640_b@3c";
+				};
+			};
+
+			override@21 {
+				target = <&vi_port1>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@22 {
+				target = <&ov5640_vi_in1>;
+				_overlay_ {
+					status = "okay";
+					port-index = <1>;
+					bus-width = <2>;
+					remote-endpoint = <&ov5640_csi_out1>;
+				};
+			};
+
+			override@23 {
+				target = <&csi_chan1>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@24 {
+				target = <&csi_chan1_port0>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@25 {
+				target = <&ov5640_csi_in1>;
+				_overlay_ {
+					status = "okay";
+					port-index = <1>;
+					bus-width = <2>;
+					remote-endpoint = <&ov5640_out1>;
+				};
+			};
+			override@26 {
+				target = <&csi_chan1_port1>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@27 {
+				target = <&ov5640_csi_out1>;
+				_overlay_ {
+					status = "okay";
+					remote-endpoint = <&ov5640_vi_in1>;
+				};
+			};
+
+			override@28 {
+				target = <&ov5640_cam2>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@29 {
+				target = <&cam_module2>;
+				_overlay_ {
+					status = "okay";
+					badge = "ov5640_bottom_ov";
+					position = "bottom";
+					orientation = "1";
+				};
+			};
+			override@30 {
+				target = <&cam_module2_drivernode0>;
+				_overlay_ {
+					status = "okay";
+					pcl_id = "v4l2_sensor";
+					devname = "ov5640 2-003c";
+					proc-device-tree = "/proc/device-tree/i2c@3160000/ov5640_c@3c";
+				};
+			};
+
+			override@31 {
+				target = <&vi_port2>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@32 {
+				target = <&ov5640_vi_in2>;
+				_overlay_ {
+					status = "okay";
+					port-index = <2>;
+					bus-width = <2>;
+					remote-endpoint = <&ov5640_csi_out2>;
+				};
+			};
+
+			override@33 {
+				target = <&csi_chan2>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@34 {
+				target = <&csi_chan2_port0>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@35 {
+				target = <&ov5640_csi_in2>;
+				_overlay_ {
+					status = "okay";
+					port-index = <2>;
+					bus-width = <2>;
+					remote-endpoint = <&ov5640_out2>;
+				};
+			};
+			override@36 {
+				target = <&csi_chan2_port1>;
+				_overlay_ {
+					status = "okay";
+				};
+			};
+			override@37 {
+				target = <&ov5640_csi_out2>;
+				_overlay_ {
+					status = "okay";
+					remote-endpoint = <&ov5640_vi_in2>;
+				};
+			};
+			
 		};
 
 		/* E3333 camera board */

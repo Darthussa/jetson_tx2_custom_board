@@ -22,11 +22,13 @@
 #include "t18x-common-platforms/tegra186-quill-camera-imx274-dual.dtsi"
 #include "t18x-common-platforms/tegra186-quill-camera-imx390-a00.dtsi"
 #include "t18x-common-platforms/tegra186-quill-camera-vivid.dtsi"
+#include <t18x-common-platforms/tegra186-quill-camera-ov5640.dtsi>
 
 #define CAM0_RST_L	TEGRA_MAIN_GPIO(R, 5)
 #define CAM0_PWDN	TEGRA_MAIN_GPIO(R, 0)
 #define CAM1_RST_L	TEGRA_MAIN_GPIO(R, 1)
 #define CAM1_PWDN	TEGRA_MAIN_GPIO(L, 6)
+//#define CAM1_PWDN	TEGRA_MAIN_GPIO(N, 2)
 
 / {
 	tegra-camera-platform {
@@ -45,8 +47,8 @@
 		camera-control-output-low {
 			gpio-hog;
 			output-low;
-			gpios = <CAM0_RST_L 0 CAM0_PWDN 0
-				 CAM1_RST_L 0 CAM1_PWDN 0>;
+			gpios = <CAM0_RST_L 1 CAM0_PWDN 1
+				 CAM1_RST_L 1 CAM1_PWDN 1>;
 			label = "cam0-rst", "cam0-pwdn",
 				"cam1-rst", "cam1-pwdn";
 		};
@@ -57,156 +59,165 @@
 		vi_base: vi@15700000 {
 			ports {
 				vi_port0: port@0 {
-					status = "disabled";
+					status = "okay";
 					vi_in0: endpoint {
 						vc-id = <0>;
-						status = "disabled";
+						status = "okay";
 					};
 				};
 				vi_port1: port@1 {
-					status = "disabled";
+					status = "okay";
 					vi_in1: endpoint {
 						vc-id = <0>;
-						status = "disabled";
+						status = "okay";
 					};
 				};
 				vi_port2: port@2 {
-					status = "disabled";
+					status = "okay";
 					vi_in2: endpoint {
 						vc-id = <0>;
-						status = "disabled";
+						status = "okay";
 					};
 				};
 				vi_port3: port@3 {
-					status = "disabled";
+					status = "okay";
 					vi_in3: endpoint {
 						vc-id = <0>;
-						status = "disabled";
+						status = "okay";
 					};
 				};
 				vi_port4: port@4 {
-					status = "disabled";
+					status = "okay";
 					vi_in4: endpoint {
 						vc-id = <0>;
-						status = "disabled";
+						status = "okay";
 					};
 				};
 				vi_port5: port@5 {
-					status = "disabled";
+					status = "okay";
 					vi_in5: endpoint {
 						vc-id = <0>;
-						status = "disabled";
+						status = "okay";
 					};
 				};
 			};
 		};
 		csi_base: nvcsi@150c0000 {
 			csi_chan0: channel@0 {
-				status = "disabled";
+				status = "okay";
 				ports {
 					csi_chan0_port0: port@0 {
-						status = "disabled";
+						status = "okay";
 						csi_in0: endpoint@0 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 					csi_chan0_port1: port@1 {
-						status = "disabled";
+						status = "okay";
 						csi_out0: endpoint@1 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 				};
 			};
 			csi_chan1: channel@1 {
-				status = "disabled";
+				status = "okay";
 				ports {
 					csi_chan1_port0: port@0 {
-						status = "disabled";
+						status = "okay";
 						csi_in1: endpoint@2 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 					csi_chan1_port1: port@1 {
-						status = "disabled";
+						status = "okay";
 						csi_out1: endpoint@3 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 				};
 			};
 			csi_chan2: channel@2 {
-				status = "disabled";
+				status = "okay";
 				ports {
 					csi_chan2_port0: port@0 {
-						status = "disabled";
+						status = "okay";
 						csi_in2: endpoint@4 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 					csi_chan2_port1: port@1 {
-						status = "disabled";
+						status = "okay";
 						csi_out2: endpoint@5 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 				};
 			};
 			csi_chan3: channel@3 {
-				status = "disabled";
+				status = "okay";
 				ports {
 					csi_chan3_port0: port@0 {
-						status = "disabled";
+						status = "okay";
 						csi_in3: endpoint@6 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 					csi_chan3_port1: port@1 {
-						status = "disabled";
+						status = "okay";
 						csi_out3: endpoint@7 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 				};
 			};
 			csi_chan4: channel@4 {
-				status = "disabled";
+				status = "okay";
 				ports {
 					csi_chan4_port0: port@0 {
-						status = "disabled";
+						status = "okay";
 						csi_in4: endpoint@8 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 					csi_chan4_port1: port@1 {
-						status = "disabled";
+						status = "okay";
 						csi_out4: endpoint@9 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 				};
 			};
 			csi_chan5: channel@5 {
-				status = "disabled";
+				status = "okay";
 				ports {
 					csi_chan5_port0: port@0 {
-						status = "disabled";
+						status = "okay";
 						csi_in5: endpoint@10 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 					csi_chan5_port1: port@1 {
-						status = "disabled";
+						status = "okay";
 						csi_out5: endpoint@11 {
-							status = "disabled";
+							status = "okay";
 						};
 					};
 				};
 			};
 		};
 	};
-
+	i2c@3160000 {
+		status = "okay";
+		ov5640_cam2: ov5640_c@3c {
+			status = "okay";
+		};	
+	};
 	i2c@3180000 {
+		status = "okay";
+		ov5640_cam0: ov5640_a@3c {
+			status = "okay";
+		};		
 		e3326_cam0: ov5693_c@36 {
 			status = "disabled";
 		};
@@ -310,6 +321,10 @@
 	};
 
 	i2c@c240000 {
+		status = "okay";
+		ov5640_cam1: ov5640_b@3c {
+			status = "okay";
+		};	
 		e3323_cam1: ov23850_c@36 {
 			status = "disabled";
 		};
@@ -319,62 +334,62 @@
 		compatible = "nvidia, tegra-camera-platform";
 		modules {
 			cam_module0: module0 {
-				status = "disabled";
+				status = "okay";
 				cam_module0_drivernode0: drivernode0 {
-					status = "disabled";
+					status = "okay";
 				};
 				cam_module0_drivernode1: drivernode1 {
-					status = "disabled";
+					status = "okay";
 					pcl_id = "v4l2_lens";
 				};
 			};
 			cam_module1: module1 {
-				status = "disabled";
+				status = "okay";
 				cam_module1_drivernode0: drivernode0 {
-					status = "disabled";
+					status = "okay";
 				};
 				cam_module1_drivernode1: drivernode1 {
-					status = "disabled";
+					status = "okay";
 					pcl_id = "v4l2_lens";
 				};
 			};
 			cam_module2: module2 {
-				status = "disabled";
+				status = "okay";
 				cam_module2_drivernode0: drivernode0 {
-					status = "disabled";
+					status = "okay";
 				};
 				cam_module2_drivernode1: drivernode1 {
-					status = "disabled";
+					status = "okay";
 					pcl_id = "v4l2_lens";
 				};
 			};
 			cam_module3: module3 {
-				status = "disabled";
+				status = "okay";
 				cam_module3_drivernode0: drivernode0 {
-					status = "disabled";
+					status = "okay";
 				};
 				cam_module3_drivernode1: drivernode1 {
-					status = "disabled";
+					status = "okay";
 					pcl_id = "v4l2_lens";
 				};
 			};
 			cam_module4: module4 {
-				status = "disabled";
+				status = "okay";
 				cam_module4_drivernode0: drivernode0 {
-					status = "disabled";
+					status = "okay";
 				};
 				cam_module4_drivernode1: drivernode1 {
-					status = "disabled";
+					status = "okay";
 					pcl_id = "v4l2_lens";
 				};
 			};
 			cam_module5: module5 {
-				status = "disabled";
+				status = "okay";
 				cam_module5_drivernode0: drivernode0 {
-					status = "disabled";
+					status = "okay";
 				};
 				cam_module5_drivernode1: drivernode1 {
-					status = "disabled";
+					status = "okay";
 					pcl_id = "v4l2_lens";
 				};
 			};

@@ -223,6 +223,8 @@ static int extract_pixel_format(
 		*format = V4L2_PIX_FMT_YVYU;
 	else if (strncmp(pixel_t, "yuv_uyvy16", size) == 0)
 		*format = V4L2_PIX_FMT_UYVY;
+	else if (strncmp(pixel_t, "uyvy", size) == 0)
+		*format = V4L2_PIX_FMT_UYVY;
 	else if (strncmp(pixel_t, "yuv_vyuy16", size) == 0)
 		*format = V4L2_PIX_FMT_VYUY;
 	else {

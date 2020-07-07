@@ -170,6 +170,14 @@
 
 	i2c@c240000 {
 		status = "okay";
+		aic32x4_io: tlv320aic32x4-0018@18
+		{
+			compatible = "ti,tlv320aic32x4";
+			status = "okay";
+			reg = <0x18>;
+			clocks = <&tegra_car TEGRA186_CLK_AUD_MCLK>;
+			clock-names = "mclk";
+		};
 		lp8556_backlight: lp8556-backlight-s-wqxga-10-1@2c {
 			status = "disabled";
 			disable-on-kernel-charging;
@@ -696,6 +704,26 @@
 		compatible = "nvidia,tegra-audio-t186ref-mobile-rt565x";
 		nvidia,model = "tegra-snd-t186ref-mobile-rt565x";
 		nvidia,num-codec-link = <12>;
+		nvidia,num-clk = <8>;
+		nvidia,clk-rates = < 270950400	/* PLLA_x11025_RATE */
+				     11289600	/* AUD_MCLK_x11025_RATE */
+				     45158400	/* PLLA_OUT0_x11025_RATE */
+				     45158400	/* AHUB_x11025_RATE */
+				     245760000  /* PLLA_x8000_RATE */
+				     12288000	/* AUD_MCLK_x8000_RATE */
+				     49152000	/* PLLA_OUT0_x8000_RATE */
+				     49152000 >;/* AHUB_x8000_RATE */
+		clocks = <&tegra_car TEGRA186_CLK_PLLP_OUT0>,
+			<&tegra_car TEGRA186_CLK_PLLA>,
+			<&tegra_car TEGRA186_CLK_PLL_A_OUT0>,
+			<&tegra_car TEGRA186_CLK_AHUB>,
+			<&tegra_car TEGRA186_CLK_CLK_M>,
+			<&tegra_car TEGRA186_CLK_AUD_MCLK>;
+		clock-names = "pll_p_out1", "pll_a", "pll_a_out0", "ahub",
+				"clk_m", "extern1";
+		resets = <&tegra_car TEGRA186_RESET_AUD_MCLK>;
+		reset-names = "extern1_rst";
+/*
 		clocks = <&tegra_car TEGRA186_CLK_PLLA>,
 			 <&tegra_car TEGRA186_CLK_PLL_A_OUT0>,
 			 <&tegra_car TEGRA186_CLK_AHUB>,
@@ -709,9 +737,24 @@
 					 <&tegra_car TEGRA186_CLK_PLL_A_OUT0>;
 		resets = <&tegra_car TEGRA186_RESET_AUD_MCLK>;
 		reset-names = "extern1_rst";
+*/
 
 		status = "okay";
+//===================================================================
+
 		nvidia,audio-routing =
+			"x OUT",		"x LOL",
+			"x OUT",		"x LOR",
+			"x OUT",		"x HPL",
+			"x OUT",		"x HPR",
+			"x IN2_L",		"x IN",	
+			"x IN2_R",		"x IN",
+			"x IN1_L",		"x IN",	
+			"x IN1_R",		"x IN",
+			"x IN3_L",		"x IN",	
+			"x IN3_R",		"x IN";
+////Change by Mike 
+		/*nvidia,audio-routing =
 			"x Headphone",		"x OUT",
 			"x IN",			"x Mic",
 			"y Headphone",		"y OUT",
@@ -730,11 +773,32 @@
 			"d IN",			"d Mic",
 			"d1 Headphone",		"d1 OUT",
 			"d3 Headphone",		"d3 OUT";
-
+*/
 		nvidia,xbar = <&tegra_axbar>;
-		mclk-fs = <256>;
-
-		rt565x_dai_link: nvidia,dai-link-1 {
+//		mclk-fs = <256>;
+		rt565x_dai_link: nvidia,dai-link-1
+		{
+			link-name = "playback-i2s1";
+			cpu-dai = <&tegra_i2s1>;
+			codec-dai = <&aic32x4_io>;
+			cpu-dai-name = "I2S1";
+			codec-dai-name = "tlv320aic32x4-hifi";
+			tx-mask = <0xFF>;
+			rx-mask = <0xFF>;
+			format = "i2s";
+			bitclock-slave;
+			frame-slave;
+			bitclock-noninversion;
+			frame-noninversion;
+			bit-format = "s16_le";
+			bclk_ratio = <0>;
+			srate = <48000>;
+			num-channel = <2>;
+			ignore_suspend;
+			name-prefix = "x";
+			status = "okay";
+		};
+		/*rt565x_dai_link: nvidia,dai-link-1 {
 			link-name = "spdif-dit-0";
 			cpu-dai = <&tegra_i2s1>;
 			codec-dai = <&spdif_dit0>;
@@ -747,7 +811,7 @@
 			ignore_suspend;
 			name-prefix = "x";
 			status = "okay";
-		};
+		};*/
 		nvidia,dai-link-2 {
 			link-name = "spdif-dit-1";
 			cpu-dai = <&tegra_i2s2>;
@@ -967,7 +1031,7 @@
 		extcon-cable-names = "vbus";
 		#extcon-cells = <1>;
 	};
-
+	
 #if TEGRA_XUSB_DT_VERSION >= DT_VERSION_2
 	xhci@3530000 {
 		extcon-cables = <&vbus_id_extcon 1>;
@@ -975,6 +1039,7 @@
 		#extcon-cells = <1>;
 	};
 #endif
+
 	xotg {
 		extcon-cables = <&vbus_id_extcon 1>, <&vbus_id_extcon 0>;
 		extcon-cable-names = "id", "vbus";

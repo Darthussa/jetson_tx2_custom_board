@@ -520,6 +520,7 @@
 			};
 			usb2-1 {
 				status = "disabled";
+
 			};
 			usb2-2 {
 				status = "disabled";

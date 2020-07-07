@@ -28,6 +28,51 @@
 			regulator-always-on;
 			regulator-boot-on;
 		};
+vdd_1v8_fixed: regulator@102 {
+			compatible = "regulator-fixed";
+			reg = <101>;
+			regulator-name = "vdd-1v8-fixed";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			regulator-always-on;
+			regulator-boot-on;
+		};
+		vdd_3v3_fixed: regulator@103 {
+			compatible = "regulator-fixed";
+			reg = <101>;
+			regulator-name = "vdd-3v3-fixed";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+			regulator-always-on;
+			regulator-boot-on;
+		};
+		vdd_5v_fixed: regulator@104 {
+			compatible = "regulator-fixed";
+			reg = <101>;
+			regulator-name = "vdd-5v-fixed";
+			regulator-min-microvolt = <5000000>;
+			regulator-max-microvolt = <5000000>;
+			regulator-always-on;
+			regulator-boot-on;
+		};
+		ldo7_fixed: regulator@103 {
+			compatible = "regulator-fixed";
+			reg = <101>;
+			regulator-name = "ldo7-fixed";
+			regulator-min-microvolt = <1000000>;
+			regulator-max-microvolt = <1000000>;
+			regulator-always-on;
+			regulator-boot-on;
+		};
+		ldo8_fixed: regulator@106 {
+			compatible = "regulator-fixed";
+			reg = <101>;
+			regulator-name = "ldo8-fixed";
+			regulator-min-microvolt = <1000000>;
+			regulator-max-microvolt = <1000000>;
+			regulator-always-on;
+			regulator-boot-on;
+		};
 	};
 
 
@@ -100,14 +145,14 @@
 	};
 
 	xudc@3550000 {
-		avdd-usb-supply = <&spmic_sd3>;
+		avdd-usb-supply = <&vdd_3v3_fixed>;
 	};
 
 	pinctrl@3520000 {
 		vbus-0-supply = <&vdd_usb0_5v>;
 		vbus-1-supply = <&vdd_usb1_5v>;
-		vbus-2-supply = <&vdd_usb2_5v>;
-		vbus-3-supply = <&battery_reg>;
+		vbus-2-supply = <&battery_reg>;
+		vbus-3-supply = <&vdd_usb2_5v>;
 		vddio-hsic-supply = <&battery_reg>;
 		avdd_usb-supply = <&spmic_sd3>;
 		vclamp_usb-supply = <&spmic_sd2>;
@@ -158,6 +203,22 @@
 		vddio-sdmmc3-hv-supply =  <&spmic_ldo5>;
 	};
 
+	i2c@3180000 {
+		 ov5640_a@3c{
+			vcc-supply = <&vdd_1v8_ap>;
+			};
+
+	};
+	i2c@3160000 {
+			ov5640_c@3c{
+			vcc-supply = <&vdd_1v8_ap>;
+			};
+	};
+	i2c@c240000 {
+			ov5640_b@3c{
+			vcc-supply = <&vdd_1v8_ap>;
+			};
+	};
 	i2c@c250000 {
 		tegra_tmp451: temp-sensor@4c {
 			vdd-supply = <&vdd_1v8_ap>;
