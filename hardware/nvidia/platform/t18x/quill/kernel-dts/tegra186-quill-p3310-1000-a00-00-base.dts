@@ -295,12 +295,12 @@
 
 	host1x {
 		sor {
-			status = "disabled";
+			status = "okay";
 			dp-display {
-				status = "disabled";
+				status = "diabled";
 			};
 			hdmi-display {
-				status = "disabled";
+				status = "okay";
 			};
 
 			panel-s-edp-uhdtv-15-6 {
@@ -321,7 +321,7 @@
 				status = "okay";
 			};
 			dp-display {
-				status = "disabled";
+				status = "okay";
 			};
 		};
 
