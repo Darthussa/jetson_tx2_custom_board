@@ -28,7 +28,7 @@
 			nvidia,dc-connector = <&sor1>;
 		};
 		nvdisplay@15210000 {
-			status = "disabled";
+			status = "okay";
 			nvidia,dc-or-node = "/host1x/dsi";
 			nvidia,dc-connector = <&dsi>;
 		};

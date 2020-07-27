@@ -68,7 +68,7 @@
 				};
 			}; /* panel-s-edp-uhdtv-15-6 */
 			hdmi-display {
-				status = "disabled";
+				status = "okay";
 			};
 			dp-display {
 				status = "disabled";

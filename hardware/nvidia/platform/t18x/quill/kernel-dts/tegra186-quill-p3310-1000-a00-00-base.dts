@@ -297,7 +297,7 @@
 		sor {
 			status = "okay";
 			dp-display {
-				status = "diabled";
+				status = "disabled";
 			};
 			hdmi-display {
 				status = "okay";

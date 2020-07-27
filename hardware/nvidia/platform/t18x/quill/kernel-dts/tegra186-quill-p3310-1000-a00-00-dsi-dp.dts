@@ -28,7 +28,7 @@
 		};
 
 		nvdisplay@15220000 {
-			status = "disabled";
+			status = "okay";
 		};
 
 		sor {
