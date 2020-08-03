@@ -32,11 +32,11 @@
 		};
 
 		sor {
-			status = "okay";
-			bootloader-status = "okay";
+			status = "disabled";
+			bootloader-status = "disabled";
 			dp-display {
-				status = "okay";
-				bootloader-status = "okay";
+				status = "disabled";
+				bootloader-status = "disabled";
 			};
 		};
 
