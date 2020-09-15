@@ -1,0 +1,112 @@
+/*
+ * tegra186-quill-p3310-1000-c03-00-dsi-hdmi-hdmi-imx274-hdmiin.dts: DTS file
+ * for Quill to enable display on all three heads with dual HDMI: DSI, HDMI and
+ * HDMI and as well as the IMX274 sensor and TC358840 HDMI IN.
+ *
+ * Copyright (c) 2019-2020, NVIDIA CORPORATION.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ */
+
+#include "tegra186-quill-p3310-1000-c03-00-base.dts"
+/*#include "panels/panel-j-720p-5-0.dtsi"*/
+/*#include "panels/panel-s-wuxga-8-0-mods.dtsi"*/
+
+/ {
+        nvidia,dtsfilename = __FILE__;
+
+        host1x {
+                nvdisplay@15200000 {
+                        status = "okay";
+//                        nvidia,fb-win = <7>;
+//                        win-mask = <0x0>;
+                        nvidia,dc-or-node = "/host1x/dsi";
+                };
+                nvdisplay@15210000 {
+                        status = "okay";
+//                        win-mask = <0x18>;
+//                        nvidia,fb-win = <0x3>;
+                        nvidia,dc-or-node = "/host1x/sor1";
+                };
+/*                nvdisplay@15220000 {
+                        nvidia,fb-win = <5>;
+                        win-mask = <0x20>;
+                };*/
+                dsi {
+                        status = "okay";
+                        nvidia,active-panel = <&panel_s_wuxga_8_0>;
+                        panel-s-wuxga-8-0 {
+                                bootloader-status = "disabled";
+                                status = "okay";
+                        };
+/*                dsi {
+                        status = "okay";
+                        nvidia,active-panel = <&panel_j_720p_5_0>;
+                        panel-j-720p-5-0 {
+                                bootloader-status = "disabled";
+                                status = "okay";
+                        };*/
+                };
+                sor1 {
+                        status = "okay";
+                        nvidia,active-panel = <&sor1_hdmi_display>;
+                        dp-display {
+                                bootloader-status = "disabled";
+                                status = "disabled";
+                        };
+                        hdmi-display {
+                                status = "okay";
+                        };
+                };
+        };
+/**/
+        leds {
+                compatible = "gpio-leds";
+
+                led10 {
+                        label = "pr_dcdc_on_L";
+                        gpios = <&gpio_i2c_0_77 13 GPIO_ACTIVE_HIGH>;
+                        default-state = "off";
+                };
+
+/*                led11 {
+                        label = "pr_dcdc_on_R";
+                        gpios = <&gpio0 22 GPIO_ACTIVE_HIGH>;
+                        default-state = "off";
+                };*/
+/*
+                led3 {
+                        label = "shc:lan:red";
+                        gpios = <&gpio0 26 GPIO_ACTIVE_HIGH>;
+                        default-state = "off";
+                };
+
+                led4 {
+                        label = "shc:lan:bl";
+                        gpios = <&gpio1 17 GPIO_ACTIVE_HIGH>;
+                        default-state = "off";
+                };
+
+                led5 {
+                        label = "shc:cloud:red";
+                        gpios = <&gpio2 2 GPIO_ACTIVE_HIGH>;
+                        default-state = "off";
+                };
+
+                led6 {
+                        label = "shc:cloud:bl";
+                        gpios = <&gpio1 18 GPIO_ACTIVE_HIGH>;
+                        default-state = "off";
+                }; */
+        };
+
+/**/
+};

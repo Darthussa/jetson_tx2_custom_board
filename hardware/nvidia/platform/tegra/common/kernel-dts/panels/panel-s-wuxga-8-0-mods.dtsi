@@ -27,7 +27,7 @@
 				status = "disabled";
 				compatible = "s,wuxga-8-0-mods";
 				nvidia,dsi-instance = <DSI_INSTANCE_0>;
-				nvidia,dsi-n-data-lanes = <8>;
+				nvidia,dsi-n-data-lanes = <4>;
 				nvidia,dsi-pixel-format = <TEGRA_DSI_PIXEL_FORMAT_24BIT_P>;
 				nvidia,dsi-refresh-rate = <60>;
 				nvidia,dsi-video-data-type = <TEGRA_DSI_VIDEO_TYPE_VIDEO_MODE>;
